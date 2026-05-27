@@ -1,0 +1,115 @@
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
+import { useSession } from "@/lib/auth-client";
+import DropdownButton from "./DropdownButton";
+
+const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const { data } = useSession();
+  const user = data?.user;
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-cyan-200/10 backdrop-blur-md bg-linear-to-r from-white via-sky-50 to-white dark:from-[#0b1120] dark:via-[#111827] dark:to-black">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-linear-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-xl shadow-md">
+              P
+            </div>
+
+            <h1 className="text-2xl font-bold bg-linear-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
+              PetAdopt
+            </h1>
+          </Link>
+
+          {/* desktop nav */}
+          <nav className="hidden md:flex items-center gap-8 font-medium text-gray-700 dark:text-gray-200">
+            <Link
+              href="/"
+              className="hover:text-cyan-500 transition duration-300"
+            >
+              Home
+            </Link>
+
+            <Link
+              href="/all-pets"
+              className="hover:text-cyan-500 transition duration-300"
+            >
+              All Pets
+            </Link>
+          </nav>
+
+          {/* desktop button */}
+          <div className="hidden md:block">
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+
+              {user ? (
+                <DropdownButton user={user} />
+              ) : (
+                <Link
+                  href="/login"
+                  className="bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-5 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-cyan-500/30"
+                >
+                  Login
+                </Link>
+              )}
+            </div>
+          </div>
+
+          {/* mobile menu button */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-gray-700 dark:text-white"
+          >
+            {open ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+
+        {/* mobile nav */}
+        {open && (
+          <div className="md:hidden pb-5 pt-2">
+            <nav className="flex flex-col gap-4 font-medium text-gray-700 dark:text-gray-200">
+              <Link
+                href="/"
+                className="hover:text-cyan-500 transition duration-300"
+              >
+                Home
+              </Link>
+
+              <Link
+                href="/all-pets"
+                className="hover:text-cyan-500 transition duration-300"
+              >
+                All Pets
+              </Link>
+
+              <div>
+                <ThemeToggle />
+              </div>
+
+              {user ? (
+                <DropdownButton user={user} />
+              ) : (
+                <Link
+                  href="/login"
+                  className="bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-4 py-2 rounded-lg w-fit transition-all duration-300 shadow-md hover:shadow-cyan-500/30"
+                >
+                  Login
+                </Link>
+              )}
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;
