@@ -1,18 +1,14 @@
 "use client";
-
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { useSession } from "@/lib/auth-client";
 import DropdownButton from "./DropdownButton";
-
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
   const { data } = useSession();
   const user = data?.user;
-
   return (
     <header className="sticky top-0 z-50 border-b border-cyan-200/10 backdrop-blur-md bg-linear-to-r from-white via-sky-50 to-white dark:from-[#0b1120] dark:via-[#111827] dark:to-black">
       <div className="max-w-7xl mx-auto px-4">
@@ -119,5 +115,4 @@ const Navbar = () => {
     </header>
   );
 };
-
 export default Navbar;

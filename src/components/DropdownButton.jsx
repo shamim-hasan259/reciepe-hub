@@ -1,5 +1,5 @@
 "use client";
-import { authClient, signOut } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { ArrowRightFromSquare } from "@gravity-ui/icons";
 import { Avatar, Dropdown } from "@heroui/react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ const DropdownButton = ({ user }) => {
       <Dropdown.Popover>
         <Dropdown.Menu>
           <Dropdown.Item>
-            <Link className="w-full" href={"/dashboard"}>
+            <Link className="w-full" href={`/dashboard/${user.role}`}>
               Dashboard
             </Link>
           </Dropdown.Item>

@@ -1,13 +1,17 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 const LoginPage = () => {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,17 +31,36 @@ const LoginPage = () => {
     }
 
     setErrors(newErrors);
-    const { data, error } = await authClient.signIn.email({
-      email,
-      password,
-    });
-    console.log("res", { data, error });
-    if (data) {
-      toast.success(`login successfully`);
-      redirect("/");
+
+    if (Object.keys(newErrors).length > 0) {
+      return;
     }
-    toast.error(`${error.message}`);
+
+    try {
+      setLoading(true);
+
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      console.log("res", { data, error });
+
+      if (data) {
+        toast.success("Login successfully");
+        router.push("/");
+      }
+
+      if (error) {
+        toast.error(error.message || "Login failed");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0f172a] px-4 transition-all duration-300">
       <div className="w-full max-w-md bg-white dark:bg-[#111827] shadow-2xl rounded-3xl p-8 border border-gray-200 dark:border-gray-700">
@@ -97,6 +120,7 @@ const LoginPage = () => {
           </div>
 
           {/* Forgot Password */}
+
           <div className="flex justify-end">
             <Link
               href="/forgot-password"
@@ -107,15 +131,25 @@ const LoginPage = () => {
           </div>
 
           {/* Login Button */}
+
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold transition-all duration-300"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white font-semibold transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            Login
+            {loading ? (
+              <>
+                <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 
         {/* Divider */}
+
         <div className="flex items-center gap-3 my-6">
           <div className="flex-1 h-[1px] bg-gray-300 dark:bg-gray-700"></div>
 
@@ -125,6 +159,7 @@ const LoginPage = () => {
         </div>
 
         {/* Google Login */}
+
         <button className="w-full border border-gray-300 dark:border-gray-600 py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100 dark:hover:bg-[#1f2937] transition-all duration-300 text-gray-700 dark:text-white font-medium">
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
@@ -135,6 +170,7 @@ const LoginPage = () => {
         </button>
 
         {/* Register Redirect */}
+
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
           Don&apos;t have an account?{" "}
           <Link
