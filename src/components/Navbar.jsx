@@ -20,11 +20,11 @@ const Navbar = () => {
           {/* logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-linear-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-xl shadow-md">
-              P
+              R
             </div>
 
             <h1 className="text-2xl font-bold bg-linear-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-              PetAdopt
+              RecipeHub
             </h1>
           </Link>
 
@@ -38,11 +38,19 @@ const Navbar = () => {
             </Link>
 
             <Link
-              href="/all-pets"
+              href="/browse-recipes"
               className="hover:text-cyan-500 transition duration-300"
             >
-              All Pets
+              Borowse Recipes
             </Link>
+            {user && (
+              <Link
+                href={`/dashboard/${user.role}`}
+                className="hover:text-cyan-500 transition duration-300"
+              >
+                Dashboard
+              </Link>
+            )}
           </nav>
 
           {/* desktop button */}
@@ -84,10 +92,10 @@ const Navbar = () => {
               </Link>
 
               <Link
-                href="/all-pets"
+                href="/browse-recipes"
                 className="hover:text-cyan-500 transition duration-300"
               >
-                All Pets
+                Borowse Recipes
               </Link>
 
               <div>

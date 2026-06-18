@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddPetPage = () => {
+const AddRecipePage = () => {
   return (
     <div>
       <h2>add pet page</h2>
@@ -8,4 +8,4 @@ const AddPetPage = () => {
   );
 };
 
-export default AddPetPage;
+export default AddRecipePage;
