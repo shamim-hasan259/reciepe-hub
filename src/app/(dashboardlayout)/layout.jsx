@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import NextThemeProvider from "@/providers/NextThemeProvider";
 import { Toaster } from "react-hot-toast";
+import DashboardSidebar from "@/components/DashboardSidebar";
 
 const Layout = ({ children }) => {
   return (
@@ -11,7 +12,7 @@ const Layout = ({ children }) => {
         <main>
           <div className="max-w-7xl mx-auto grid grid-cols-12">
             <div className="col-span-4">
-              <h2>sidebar</h2>
+              <DashboardSidebar />
             </div>
             <div className="col-span-8">
               {children}

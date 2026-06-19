@@ -1,14 +1,32 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+
 import ThemeToggle from "./ThemeToggle";
 import { useSession } from "@/lib/auth-client";
 import DropdownButton from "./DropdownButton";
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
   const { data } = useSession();
   const user = data?.user;
+
+  const getLinkClass = (path) => {
+    const isActive =
+      pathname === path || (path !== "/" && pathname.startsWith(path));
+
+    return `transition duration-300 ${
+      isActive
+        ? "text-cyan-500 font-semibold"
+        : "text-gray-700 dark:text-gray-200 hover:text-cyan-500"
+    }`;
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-cyan-200/10 backdrop-blur-md bg-linear-to-r from-white via-sky-50 to-white dark:from-[#0b1120] dark:via-[#111827] dark:to-black">
       <div className="max-w-7xl mx-auto px-4">
@@ -25,31 +43,29 @@ const Navbar = () => {
           </Link>
 
           {/* desktop nav */}
-          <nav className="hidden md:flex items-center gap-8 font-medium text-gray-700 dark:text-gray-200">
-            <Link
-              href="/"
-              className="hover:text-cyan-500 transition duration-300"
-            >
+          <nav className="hidden md:flex items-center gap-8 font-medium">
+            <Link href="/" className={getLinkClass("/")}>
               Home
             </Link>
 
             <Link
               href="/browse-recipes"
-              className="hover:text-cyan-500 transition duration-300"
+              className={getLinkClass("/browse-recipes")}
             >
-              Borowse Recipes
+              Browse Recipes
             </Link>
+
             {user && (
               <Link
                 href={`/dashboard/${user.role}`}
-                className="hover:text-cyan-500 transition duration-300"
+                className={getLinkClass(`/dashboard/${user.role}`)}
               >
                 Dashboard
               </Link>
             )}
           </nav>
 
-          {/* desktop button */}
+          {/* desktop actions */}
           <div className="hidden md:block">
             <div className="flex items-center gap-4">
               <ThemeToggle />
@@ -79,20 +95,32 @@ const Navbar = () => {
         {/* mobile nav */}
         {open && (
           <div className="md:hidden pb-5 pt-2">
-            <nav className="flex flex-col gap-4 font-medium text-gray-700 dark:text-gray-200">
+            <nav className="flex flex-col gap-4 font-medium">
               <Link
                 href="/"
-                className="hover:text-cyan-500 transition duration-300"
+                className={getLinkClass("/")}
+                onClick={() => setOpen(false)}
               >
                 Home
               </Link>
 
               <Link
                 href="/browse-recipes"
-                className="hover:text-cyan-500 transition duration-300"
+                className={getLinkClass("/browse-recipes")}
+                onClick={() => setOpen(false)}
               >
-                Borowse Recipes
+                Browse Recipes
               </Link>
+
+              {user && (
+                <Link
+                  href={`/dashboard/${user.role}`}
+                  className={getLinkClass(`/dashboard/${user.role}`)}
+                  onClick={() => setOpen(false)}
+                >
+                  Dashboard
+                </Link>
+              )}
 
               <div>
                 <ThemeToggle />
@@ -115,4 +143,5 @@ const Navbar = () => {
     </header>
   );
 };
+
 export default Navbar;
