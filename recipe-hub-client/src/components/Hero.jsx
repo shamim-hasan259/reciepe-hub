@@ -41,9 +41,8 @@ const HeroSection = () => {
           </button>
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="flex-1 flex justify-center">
-          <div className="relative w-[280px] md:w-[420px] h-[280px] md:h-[420px]">
+          <div className="relative max-w-full">
             <img
               src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg"
               alt="Recipe Hero"

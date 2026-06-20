@@ -21,6 +21,7 @@ const RegisterPage = () => {
     const name = form.name.value.trim();
     const email = form.email.value.trim();
     const image = form.image.value.trim();
+    const role = form.role.value;
     const password = form.password.value;
     const confirmPassword = form.confirmPassword.value;
     const userInfo = {
@@ -29,6 +30,7 @@ const RegisterPage = () => {
       image,
       password,
       plan: "free",
+      role,
     };
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
@@ -144,6 +146,20 @@ const RegisterPage = () => {
             {errors.image && (
               <p className="text-red-500 text-sm mt-1">{errors.image}</p>
             )}
+          </div>
+          <div>
+            <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300">
+              Role
+            </label>
+
+            <select
+              name="role"
+              defaultValue="user"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#1f2937] text-black dark:text-white outline-none focus:ring-2 focus:ring-cyan-500"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
 
           <div>

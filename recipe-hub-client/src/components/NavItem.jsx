@@ -60,9 +60,7 @@ const DashboardNavItems = ({ navItems }) => {
   return (
     <div className="flex flex-col gap-2">
       {navItems?.map((item) => {
-        const isActive =
-          pathname === item.path ||
-          (item.path !== "/" && pathname.startsWith(item.path));
+        const isActive = pathname === item.path;
 
         return (
           <Link
@@ -70,11 +68,11 @@ const DashboardNavItems = ({ navItems }) => {
             href={item.path}
             className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-300 ${
               isActive
-                ? "bg-linear-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/20"
+                ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg shadow-cyan-500/30"
                 : "text-gray-700 dark:text-gray-200 hover:bg-cyan-50 dark:hover:bg-cyan-500/10 hover:text-cyan-500"
             }`}
           >
-            {getIcon(item.label)}
+            <span className="shrink-0">{getIcon(item.label)}</span>
             <span>{item.label}</span>
           </Link>
         );

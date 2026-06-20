@@ -1,9 +1,12 @@
 import React from "react";
+import AddRecipeForm from "./AddRecipeForm";
+import { getUserSession } from "@/lib/session/session";
 
-const AddRecipePage = () => {
+const AddRecipePage = async () => {
+  const user = await getUserSession();
   return (
     <div>
-      <h2>add recipe page page</h2>
+      <AddRecipeForm user={user} />
     </div>
   );
 };

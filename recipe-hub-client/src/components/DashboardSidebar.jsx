@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getUserSession } from "../lib/session/session";
 import { Button, Drawer } from "@heroui/react";
 import { Bars } from "@gravity-ui/icons";
@@ -16,7 +15,7 @@ const DashboardSidebar = async () => {
       {
         id: "add-recipe",
         label: "Add Recipe",
-        path: "/dashboard/add-recipe",
+        path: "/dashboard/user/add-recipe",
       },
       {
         id: "my-recipes",
