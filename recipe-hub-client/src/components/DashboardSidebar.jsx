@@ -2,7 +2,6 @@ import { getUserSession } from "../lib/session/session";
 import { Button, Drawer } from "@heroui/react";
 import { Bars } from "@gravity-ui/icons";
 import NavItem from "./NavItem";
-
 const DashboardSidebar = async () => {
   const user = await getUserSession();
   const daashboardItems = {
@@ -20,22 +19,22 @@ const DashboardSidebar = async () => {
       {
         id: "my-recipes",
         label: "My Recipes",
-        path: "/dashboard/my-recipes",
+        path: "/dashboard/user/my-recipes",
       },
       {
         id: "favorites",
         label: "Favorites",
-        path: "/dashboard/favorites",
+        path: "/dashboard/user/favorites",
       },
       {
         id: "purchased",
         label: "Purchased",
-        path: "/dashboard/purchased",
+        path: "/dashboard/user/purchased",
       },
       {
         id: "profile",
         label: "Profile",
-        path: "/dashboard/profile",
+        path: "/dashboard/user/profile",
       },
     ],
 
@@ -43,27 +42,27 @@ const DashboardSidebar = async () => {
       {
         id: "overview",
         label: "Overview",
-        path: "/admin/overview",
+        path: "/dashboard/admin",
       },
       {
         id: "manage-users",
         label: "Manage Users",
-        path: "/admin/manage-users",
+        path: "/dashboard/admin/manage-users",
       },
       {
         id: "manage-recipes",
         label: "Manage Recipes",
-        path: "/admin/manage-recipes",
+        path: "/dashboard/admin/manage-recipes",
       },
       {
         id: "reports",
         label: "Reports",
-        path: "/admin/reports",
+        path: "/dashboard/admin/reports",
       },
       {
         id: "transactions",
         label: "Transactions",
-        path: "/admin/transactions",
+        path: "/dashboard/admin/transactions",
       },
     ],
   };
@@ -72,7 +71,7 @@ const DashboardSidebar = async () => {
 
   return (
     <Drawer>
-      <aside className="hidden w-64 h-screen shawdow-lg shrink-0 boreder border-r border-default p-4 lg:block border-cyan-200/10 backdrop-blur-md bg-linear-to-t from-white via-sky-50 to-white dark:from-[#0b1120] dark:via-[#111827] dark:to-black">
+      <aside className="hidden w-full h-full shawdow-lg shrink-0 boreder border-r border-default p-4 lg:block border-cyan-200/10 backdrop-blur-md bg-linear-to-t from-white via-sky-50 to-white dark:from-[#0b1120] dark:via-[#0a0c11] dark:to-black">
         <NavItem navItems={navItems} />
       </aside>
       <Button

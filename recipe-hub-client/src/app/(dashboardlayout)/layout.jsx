@@ -11,10 +11,10 @@ const Layout = ({ children }) => {
         <Navbar />
         <main>
           <div className="max-w-7xl mx-auto grid grid-cols-12">
-            <div className="col-span-4">
+            <div className="col-span-3">
               <DashboardSidebar />
             </div>
-            <div className="col-span-8">
+            <div className="col-span-9">
               {children}
               <Toaster />
             </div>

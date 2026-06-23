@@ -3,12 +3,15 @@ import { authClient } from "@/lib/auth-client";
 import { ArrowRightFromSquare } from "@gravity-ui/icons";
 import { Avatar, Dropdown } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 const DropdownButton = ({ user }) => {
+  const router = useRouter();
   const handleLogout = async () => {
     await authClient.signOut();
     toast.success("logout successfully");
+    router.push("/login");
   };
   return (
     <Dropdown>

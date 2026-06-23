@@ -22,7 +22,7 @@ export const auth = betterAuth({
         defaultValue: "free",
       },
       limit: {
-        defaultValue: 0,
+        defaultValue: 2,
       },
     },
   },

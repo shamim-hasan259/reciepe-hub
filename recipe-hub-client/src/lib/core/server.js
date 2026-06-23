@@ -2,7 +2,6 @@ import { getTokenServer } from "../session/session";
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 export const serverMution = async (path, data, method) => {
   const token = await getTokenServer();
-  // console.log(token);
   const res = await fetch(`${baseUrl}${path}`, {
     method: method,
     headers: {
@@ -12,4 +11,10 @@ export const serverMution = async (path, data, method) => {
     body: JSON.stringify(data),
   });
   return await res.json();
+};
+
+export const serverFetch = async (path) => {
+  const res = await fetch(`${baseUrl}${path}`);
+  const data = await res.json();
+  return data || [];
 };
