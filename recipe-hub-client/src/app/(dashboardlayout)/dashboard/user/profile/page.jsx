@@ -4,7 +4,7 @@ import { Crown, Check, User, Save, Sparkles, Settings } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function ProfileAndPremiumServer() {
+export default function ProfilePage() {
   const [userName, setUserName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const { data } = useSession();
@@ -21,7 +21,6 @@ export default function ProfileAndPremiumServer() {
       toast.success("update profile successfully");
     }
   };
-
   return (
     <div className="min-h-screen bg-[#f3f4f6] dark:bg-[#0c1017] p-6 md:p-12 flex items-center justify-center transition-colors duration-300">
       <div className="max-w-5xl w-full flex flex-col gap-8">

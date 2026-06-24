@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import NextThemeProvider from "@/providers/NextThemeProvider";
 import React from "react";
@@ -12,6 +13,7 @@ const layout = ({ children }) => {
           {children}
           <Toaster />
         </main>
+        <Footer />
       </NextThemeProvider>
     </div>
   );

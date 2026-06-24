@@ -7,3 +7,11 @@ export const findRecipe = async (userId) => {
 export const singleRecipeFetch = async (id) => {
   return await serverProtectedFetch(`/api/singlerecipe/${id}`);
 };
+
+export const fetchePopularRecipe = async () => {
+  return await serverFetch("/api/popular/recipe");
+};
+
+export const fetchFeatureRecipe = async () => {
+  return await serverFetch("/api/feature/recipe");
+};

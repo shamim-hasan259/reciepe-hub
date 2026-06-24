@@ -11,6 +11,5 @@ export const updateRecipe = async (id, newData) => {
 };
 
 export const deleteRecipe = async (id) => {
-  console.log("delete id ", id);
   return await removeServer(`/api/deletercipe/${id}`, "DELETE");
 };

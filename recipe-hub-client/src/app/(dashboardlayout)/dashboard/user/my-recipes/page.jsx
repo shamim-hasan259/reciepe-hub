@@ -26,9 +26,12 @@ const MyRecipePage = async () => {
             </p>
           </div>
 
-          <button className="px-5 py-2.5 rounded-xl text-sm font-medium shadow-md transition-all duration-300 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white hover:shadow-cyan-500/30 flex items-center gap-2 self-start sm:self-center">
+          <Link
+            href="/dashboard/user/add-recipe"
+            className="px-5 py-2.5 rounded-xl text-sm font-medium shadow-md transition-all duration-300 bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white hover:shadow-cyan-500/30 flex items-center gap-2 self-start sm:self-center"
+          >
             <Plus className="w-4 h-4" /> Create Recipe
-          </button>
+          </Link>
         </div>
 
         <div className="bg-white dark:bg-[#111c2a] rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden transition-colors duration-300">
