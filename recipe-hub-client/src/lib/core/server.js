@@ -13,6 +13,17 @@ export const serverMution = async (path, data, method) => {
   return await res.json();
 };
 
+export const serverProtectedFetch = async (path) => {
+  const token = await getTokenServer();
+  const res = await fetch(`${baseUrl}${path}`, {
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+  return await res.json();
+};
+
 export const serverFetch = async (path) => {
   const res = await fetch(`${baseUrl}${path}`);
   const data = await res.json();

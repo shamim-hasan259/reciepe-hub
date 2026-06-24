@@ -1,18 +1,19 @@
 import React from "react";
 import { FileText, Bookmark, Heart, Plus } from "lucide-react";
+import Link from "next/link";
+import { getUserSession } from "@/lib/session/session";
 
-const DashBoardUserHomepage = () => {
+const DashBoardUserHomepage = async () => {
+  const user = await getUserSession();
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-6 md:p-12 font-sans transition-colors duration-200">
-      {/* Top Header */}
       <header className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold">
             Welcome back,{" "}
             <span className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-              Abc
+              {user.name}
             </span>
-            .
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Here is your command center.
@@ -23,9 +24,7 @@ const DashBoardUserHomepage = () => {
         </button>
       </header>
 
-      {/* Stats Cards Grid */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Published Recipes */}
         <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 relative overflow-hidden group">
           <div className="flex justify-between items-start mb-4">
             <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -44,7 +43,6 @@ const DashBoardUserHomepage = () => {
           </a>
         </div>
 
-        {/* Saved Favorites */}
         <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 relative overflow-hidden">
           <div className="flex justify-between items-start mb-4">
             <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -94,14 +92,14 @@ const DashBoardUserHomepage = () => {
             storage.
           </p>
         </div>
-
-        {/* Instruction Button Style (উভয় মুডেই সেম থাকবে) */}
-        <button className="px-6 py-2.5 rounded-xl font-medium shadow-lg transition-all duration-300 transform active:scale-95 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white hover:shadow-cyan-500/30 UI-upgrade-btn">
+        <Link
+          href="/dashboard/user/profile"
+          className="px-6 py-2.5 rounded-xl font-medium shadow-lg transition-all duration-300 transform active:scale-95 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white hover:shadow-cyan-500/30 UI-upgrade-btn"
+        >
           Upgrade Account
-        </button>
+        </Link>
       </section>
 
-      {/* Quick Actions */}
       <section>
         <h2 className="text-xl font-bold mb-4 bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent inline-block">
           Quick Actions

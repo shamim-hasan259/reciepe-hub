@@ -7,14 +7,14 @@ import Link from "next/link";
 const AddRecipePage = async () => {
   const user = await getUserSession();
   const { data: recipes } = await findRecipe(user?.id);
-
+  console.log(recipes);
   const canAddRecipe = user?.plan === "premium" || recipes.length < user?.limit;
   return (
     <div>
       {canAddRecipe ? (
         <AddRecipeForm user={user} />
       ) : (
-        <div className="border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-zinc-900 dark:to-zinc-900 dark:border-amber-500/20 p-8 rounded-2xl text-center max-w-xl mx-auto mt-12 shadow-xl">
+        <div className="border border-amber-200 bg-linear-to-br from-amber-50 to-orange-50 dark:from-zinc-900 dark:to-zinc-900 dark:border-amber-500/20 p-8 rounded-2xl text-center max-w-xl mx-auto mt-12 shadow-xl">
           <div className="w-16 h-16 bg-amber-100 dark:bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-4 text-amber-600 mt-10">
             <Crown className="w-8 h-8" />
           </div>

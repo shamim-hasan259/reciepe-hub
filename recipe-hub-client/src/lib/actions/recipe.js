@@ -6,6 +6,6 @@ export const addRecipe = async (data) => {
   return await serverMution("/api/recipes", data, "POST");
 };
 
-export const updateuserAddrecipeLimit = async (id) => {
-  return await serverMution(`/api/user/${id}`, {}, "PATCH");
+export const updateRecipe = async (id, newData) => {
+  return await serverMution(`/api/updaterecipe/${id}`, newData, "PATCH");
 };

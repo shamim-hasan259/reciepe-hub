@@ -1,27 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Upload, Plus, Trash2, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
-import { addRecipe } from "@/lib/actions/recipe";
-export default function AddRecipeForm({ user }) {
-  // 2. Loading states
+import { updateRecipe } from "@/lib/actions/recipe";
+import { redirect } from "next/navigation";
+
+export default function EditRecipeForm({ recipe }) {
+  console.log(recipe);
+  const recipeData = recipe?.data || recipe;
+
   const [loading, setLoading] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
 
-  // 3. Form input states
-  const [recipeName, setRecipeName] = useState("");
-  const [cuisineType, setCuisineType] = useState("");
-  const [category, setCategory] = useState("");
-  const [difficulty, setDifficulty] = useState("Easy");
-  const [prepTime, setPrepTime] = useState("");
-  const [recipeImage, setRecipeImage] = useState("");
+  const [recipeName, setRecipeName] = useState(recipeData?.recipeName || "");
+  const [cuisineType, setCuisineType] = useState(recipeData?.cuisineType || "");
+  const [category, setCategory] = useState(recipeData?.category || "");
+  const [difficulty, setDifficulty] = useState(
+    recipeData?.difficultyLevel || "Easy",
+  );
+  const [prepTime, setPrepTime] = useState(recipeData?.preparationTime || "");
+  const [recipeImage, setRecipeImage] = useState(recipeData?.recipeImage || "");
 
-  // Simple array states for dynamic inputs
-  const [ingredients, setIngredients] = useState([""]);
-  const [instructions, setInstructions] = useState([""]);
-
-  // --- ImgBB Image Upload Handler ---
+  const [ingredients, setIngredients] = useState(
+    recipeData?.ingredients || [""],
+  );
+  const [instructions, setInstructions] = useState(
+    recipeData?.instructions || [""],
+  );
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -31,7 +37,7 @@ export default function AddRecipeForm({ user }) {
     formData.append("image", file);
 
     try {
-      const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMAGE_API; // Replace with your actual ImgBB API Key
+      const IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMAGE_API;
       const response = await fetch(
         `https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`,
         {
@@ -39,22 +45,21 @@ export default function AddRecipeForm({ user }) {
           body: formData,
         },
       );
-
       const data = await response.json();
       if (data.success) {
         setRecipeImage(data.data.url);
+        toast.success("Image updated successfully!");
       } else {
         toast.error("Image upload failed!");
       }
     } catch (error) {
       console.error("Error uploading image:", error);
-      toast.error(`${error.message}` || "Error uploading image:");
+      toast.error(error.message || "Error uploading image");
     } finally {
       setImageUploading(false);
     }
   };
 
-  // --- Ingredients Field Handlers ---
   const addIngredientField = () => setIngredients([...ingredients, ""]);
   const removeIngredientField = (indexToRemove) => {
     setIngredients(ingredients.filter((_, index) => index !== indexToRemove));
@@ -65,7 +70,6 @@ export default function AddRecipeForm({ user }) {
     setIngredients(updated);
   };
 
-  // --- Instructions Field Handlers ---
   const addInstructionField = () => setInstructions([...instructions, ""]);
   const removeInstructionField = (indexToRemove) => {
     setInstructions(instructions.filter((_, index) => index !== indexToRemove));
@@ -77,29 +81,28 @@ export default function AddRecipeForm({ user }) {
   };
 
   // --- Form Submit Function ---
-  console.log(user);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const finalRecipeData = {
-      userId: user?.id,
-      userEmail: user?.email,
+
+    const updatedRecipeData = {
       recipeName,
       recipeImage,
       category,
       cuisineType,
       difficultyLevel: difficulty,
       preparationTime: Number(prepTime),
-      ingredients,
-      instructions,
-      likesCount: 0,
-      isFeatured: false,
-      status: "published",
+      ingredients: ingredients.filter((item) => item.trim() !== ""),
+      instructions: instructions.filter((item) => item.trim() !== ""),
+      status: recipeData?.status || "published",
     };
-    const res = await addRecipe(finalRecipeData);
-    if (res.status === true) {
+
+    const res = await updateRecipe(recipe._id, updatedRecipeData);
+    if (res.status) {
       toast.success(`${res.message}`);
+      redirect("/dashboard/user/my-recipes");
     }
+
     setLoading(false);
   };
 
@@ -110,20 +113,19 @@ export default function AddRecipeForm({ user }) {
           <div className="flex items-center justify-between mb-8 border-b border-slate-100 dark:border-zinc-800 pb-4">
             <div>
               <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-                Add{" "}
+                Edit{" "}
                 <span className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">
-                  New Recipe
+                  Recipe
                 </span>{" "}
               </h1>
               <p className="text-sm text-slate-500 dark:text-zinc-400">
-                Share your culinary creation with the world
+                Update your shared culinary creation
               </p>
             </div>
-            <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400">
-              Slots Remaining: {2 - user?.limit}
-            </span>
           </div>
+
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name & Cuisine */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium mb-2">
@@ -135,7 +137,6 @@ export default function AddRecipeForm({ user }) {
                   value={recipeName}
                   onChange={(e) => setRecipeName(e.target.value)}
                   className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-zinc-700 bg-transparent outline-none focus:border-blue-500 text-slate-900 dark:text-white"
-                  placeholder="e.g., Kacchi Biryani"
                 />
               </div>
               <div>
@@ -148,11 +149,11 @@ export default function AddRecipeForm({ user }) {
                   value={cuisineType}
                   onChange={(e) => setCuisineType(e.target.value)}
                   className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-zinc-700 bg-transparent outline-none focus:border-blue-500 text-slate-900 dark:text-white"
-                  placeholder="e.g., Bangladeshi, Italian"
                 />
               </div>
             </div>
 
+            {/* Category, Difficulty & Prep Time */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium mb-2">
@@ -195,10 +196,10 @@ export default function AddRecipeForm({ user }) {
                   value={prepTime}
                   onChange={(e) => setPrepTime(e.target.value)}
                   className="w-full px-4 py-2 rounded-xl border border-slate-200 dark:border-zinc-700 bg-transparent outline-none focus:border-blue-500 text-slate-900 dark:text-white"
-                  placeholder="0"
                 />
               </div>
             </div>
+
             {/* Image Upload Area */}
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -241,7 +242,7 @@ export default function AddRecipeForm({ user }) {
                   <div className="py-4">
                     <Upload className="w-6 h-6 mx-auto text-slate-400 mb-1" />
                     <p className="text-xs text-slate-500 dark:text-zinc-400">
-                      Click or Drag to upload image
+                      Click or Drag to upload new image
                     </p>
                   </div>
                 )}
@@ -263,7 +264,7 @@ export default function AddRecipeForm({ user }) {
                       changeIngredientValue(index, e.target.value)
                     }
                     className="flex-1 px-4 py-2 border border-slate-200 dark:border-zinc-700 bg-transparent rounded-xl outline-none focus:border-blue-500 text-slate-900 dark:text-white"
-                    placeholder={`Ingredient`}
+                    placeholder="Ingredient"
                   />
                   {ingredients.length > 1 && (
                     <button
@@ -300,7 +301,7 @@ export default function AddRecipeForm({ user }) {
                       changeInstructionValue(index, e.target.value)
                     }
                     className="flex-1 px-4 py-2 border border-slate-200 dark:border-zinc-700 bg-transparent rounded-xl outline-none focus:border-blue-500 text-slate-900 dark:text-white"
-                    placeholder={`Step `}
+                    placeholder="Step"
                   />
                   {instructions.length > 1 && (
                     <button
@@ -328,7 +329,7 @@ export default function AddRecipeForm({ user }) {
               disabled={loading || imageUploading}
               className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold rounded-xl transition disabled:opacity-50 shadow-md"
             >
-              {loading ? "Saving..." : "Submit Recipe"}
+              {loading ? "Updating..." : "Update Recipe"}
             </button>
           </form>
         </div>
