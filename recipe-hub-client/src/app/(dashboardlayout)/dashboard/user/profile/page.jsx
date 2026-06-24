@@ -1,16 +1,30 @@
-import { getUserSession } from "@/lib/session/session";
+"use client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { Crown, Check, User, Save, Sparkles, Settings } from "lucide-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
-export default async function ProfileAndPremiumServer() {
-  const user = await getUserSession();
-
-  // ইউজার প্রিমিয়াম কিনা চেক
+export default function ProfileAndPremiumServer() {
+  const [userName, setUserName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const { data } = useSession();
+  const user = data?.user;
   const isPremiumUser = user?.plan === "premium";
+  const handleEditProfile = async (e) => {
+    e.preventDefault();
+    const { data } = await authClient.updateUser({
+      name: userName,
+      image: imageUrl,
+    });
+    console.log(data);
+    if (data) {
+      toast.success("update profile successfully");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f3f4f6] dark:bg-[#0c1017] p-6 md:p-12 flex items-center justify-center transition-colors duration-300">
       <div className="max-w-5xl w-full flex flex-col gap-8">
-        {/* 🎯 নতুন প্রফেশনাল হেডার সেকশন */}
         <div className="border-b border-gray-200 dark:border-gray-800 pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2">
@@ -26,7 +40,6 @@ export default async function ProfileAndPremiumServer() {
             </p>
           </div>
 
-          {/* শর্টকাট স্ট্যাটাস ব্যাজ (হেডারের ডানে) */}
           <div className="self-start sm:self-center">
             {isPremiumUser ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
@@ -55,7 +68,7 @@ export default async function ProfileAndPremiumServer() {
                 <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-orange-500 shadow-md">
                   {user?.image ? (
                     <img
-                      src={user.image}
+                      src={user?.image}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
@@ -66,7 +79,6 @@ export default async function ProfileAndPremiumServer() {
                   )}
                 </div>
 
-                {/* প্রোফাইল ইমেজের ওপরের ছোট ক্রাউন ব্যাজ */}
                 {isPremiumUser && (
                   <div
                     className="absolute -bottom-1 -right-1 bg-gradient-to-r from-amber-400 to-orange-500 p-1 rounded-full shadow-md border-2 border-white dark:border-[#111c2a] animate-bounce"
@@ -77,7 +89,6 @@ export default async function ProfileAndPremiumServer() {
                 )}
               </div>
 
-              {/* Name, Email and Dynamic Badge */}
               <div className="space-y-1">
                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 leading-tight">
                   {user?.name}
@@ -86,7 +97,6 @@ export default async function ProfileAndPremiumServer() {
                   {user?.email}
                 </p>
 
-                {/* আপনার মার্ক করা জায়গার ব্যাজ */}
                 <div className="pt-1">
                   {isPremiumUser ? (
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-2.5 py-0.5 rounded-full shadow-sm shadow-cyan-500/20">
@@ -100,14 +110,13 @@ export default async function ProfileAndPremiumServer() {
                 </div>
               </div>
             </div>
-
-            {/* Form with Server Action */}
-            <form className="space-y-5">
+            <form onSubmit={handleEditProfile} className="space-y-5">
               <div>
                 <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
                   Full Name
                 </label>
                 <input
+                  onChange={(e) => setUserName(e.target.value)}
                   type="text"
                   name="fullName"
                   defaultValue={user?.name}
@@ -120,6 +129,7 @@ export default async function ProfileAndPremiumServer() {
                   Profile Image URL
                 </label>
                 <input
+                  onChange={(e) => setImageUrl(e.target.value)}
                   type="text"
                   name="imageUrl"
                   defaultValue={user?.image}
@@ -129,14 +139,13 @@ export default async function ProfileAndPremiumServer() {
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-3 rounded-xl font-medium shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
+                className="w-full bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-3 rounded-xl font-medium shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
               >
                 <Save className="w-4 h-4" /> Save Changes
               </button>
             </form>
           </div>
 
-          {/* Right Side: Go Premium Card */}
           <div className="w-full md:w-[360px] bg-white dark:bg-[#111c2a] p-8 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm flex flex-col items-center justify-between text-center transition-colors duration-300">
             <div>
               <div className="bg-amber-500/10 p-3 rounded-full inline-block mb-4">

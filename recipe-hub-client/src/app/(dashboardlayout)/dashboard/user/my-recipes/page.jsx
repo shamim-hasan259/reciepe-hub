@@ -3,6 +3,7 @@ import { getUserSession } from "@/lib/session/session";
 import React from "react";
 import { Eye, Edit2, Trash2, Heart, Plus, FolderHeart } from "lucide-react";
 import Link from "next/link";
+import DeleteRecipe from "@/components/Delete";
 
 const MyRecipePage = async () => {
   const user = await getUserSession();
@@ -46,7 +47,7 @@ const MyRecipePage = async () => {
               <tbody className="divide-y divide-gray-100 dark:divide-gray-800/60 text-sm text-gray-700 dark:text-gray-300">
                 {recipes.map((recipe) => (
                   <tr
-                    key={recipe.id}
+                    key={recipe._id}
                     className="hover:bg-gray-50/50 dark:hover:bg-[#162235]/30 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -110,9 +111,7 @@ const MyRecipePage = async () => {
                         >
                           <Edit2 className="w-3.5 h-3.5" /> Edit
                         </Link>
-                        <button className="inline-flex items-center justify-center p-2 rounded-xl bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20 font-medium text-xs transition gap-1">
-                          <Trash2 className="w-3.5 h-3.5" /> Delete
-                        </button>
+                        <DeleteRecipe id={recipe._id} />
                       </div>
                     </td>
                   </tr>
