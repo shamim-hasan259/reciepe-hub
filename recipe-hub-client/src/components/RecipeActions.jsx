@@ -5,6 +5,7 @@ import { Heart, Star, CreditCard, AlertTriangle, X } from "lucide-react";
 import { incrementLikCout } from "@/lib/actions/recipe";
 import toast from "react-hot-toast";
 import { addFavourite } from "@/lib/actions/favourite";
+import { postReprtRecipe } from "@/lib/actions/report";
 
 export default function RecipeActions({ recipePrice, recipeName, recipe }) {
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -30,11 +31,15 @@ export default function RecipeActions({ recipePrice, recipeName, recipe }) {
     }
   };
   // 3. Report Submit
-  const handleReportSubmit = (e) => {
+  const handleReportSubmit = async (e) => {
     e.preventDefault();
-    alert(`Reported: ${reportMessage}`);
-    setIsReportModalOpen(false);
-    setReportMessage("");
+    const res = await postReprtRecipe({ reportMessage });
+    console.log(res);
+    if (res.status) {
+      toast.success(`${res.message}`);
+      setIsReportModalOpen(false);
+      setReportMessage("");
+    }
   };
 
   return (
