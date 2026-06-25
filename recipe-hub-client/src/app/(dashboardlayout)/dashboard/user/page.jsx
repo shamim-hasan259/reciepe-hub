@@ -4,11 +4,21 @@ import Link from "next/link";
 import { getUserSession } from "@/lib/session/session";
 import { findRecipe } from "@/lib/api/recipe";
 import { getFavouriteRecipe } from "@/lib/api/favourite";
+import { getAllRecipe } from "@/lib/core/server";
 
 const DashBoardUserHomepage = async () => {
   const user = await getUserSession();
   const { data: recipes } = await findRecipe(user?.id);
   const { data: favourites } = await getFavouriteRecipe();
+  const { data: allrecipe } = await getAllRecipe();
+  console.log(allrecipe);
+
+  const totalLike = allrecipe.reduce(
+    (total, recipe) => total + recipe.likesCount,
+    0,
+  );
+
+  console.log(totalLike);
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-6 md:p-12 font-sans transition-colors duration-200">
@@ -75,7 +85,7 @@ const DashBoardUserHomepage = async () => {
             <Heart className="w-5 h-5 text-slate-400 dark:text-slate-500" />
           </div>
           <p className="text-4xl font-extrabold mb-2 text-slate-900 dark:text-white">
-            1
+            {totalLike}
           </p>
           <span className="text-xs text-slate-500 dark:text-slate-500">
             Across all recipes
