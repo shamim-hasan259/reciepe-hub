@@ -4,7 +4,6 @@ import PopularRecipeCard from "./PopularRecipeCard";
 
 const FeatureRecipe = async () => {
   const { data: recipes = [] } = (await fetchFeatureRecipe()) || {};
-
   return (
     <section className="relative border-none outline-none bg-[#f3f4f6] dark:bg-gradient-to-b dark:from-[#0c1017] dark:via-[#0e141f] dark:to-[#0c1017] py-16 px-6 md:px-12 transition-colors duration-300 overflow-hidden min-h-[500px]">
       <div className="absolute top-10 right-1/4 w-[500px] h-[500px] bg-rose-500/[0.02] dark:bg-rose-500/[0.02] rounded-full blur-[130px] pointer-events-none"></div>
@@ -24,7 +23,7 @@ const FeatureRecipe = async () => {
           </p>
         </div>
         {recipes.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6 justify-items-center w-full">
             {recipes.map((recipe) => (
               <PopularRecipeCard
                 key={recipe._id || recipe.recipeName}

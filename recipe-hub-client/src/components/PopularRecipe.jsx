@@ -24,7 +24,7 @@ const PopularRecipe = async () => {
         </div>
 
         {recipes.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6 justify-items-center">
             {recipes.map((recipe) => (
               <PopularRecipeCard
                 key={recipe._id || recipe.recipeName}

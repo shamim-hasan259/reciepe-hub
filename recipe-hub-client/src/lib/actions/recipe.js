@@ -13,3 +13,7 @@ export const updateRecipe = async (id, newData) => {
 export const deleteRecipe = async (id) => {
   return await removeServer(`/api/deletercipe/${id}`, "DELETE");
 };
+
+export const incrementLikCout = async (id) => {
+  return await serverMution(`/api/incrementlike/${id}`, {}, "PATCH");
+};

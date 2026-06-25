@@ -1,5 +1,6 @@
 import React from "react";
 import { Heart, Clock, Utensils, Flame } from "lucide-react";
+import Link from "next/link";
 
 const PopularRecipeCard = ({ recipe }) => {
   const {
@@ -78,10 +79,13 @@ const PopularRecipeCard = ({ recipe }) => {
       </div>
 
       <div className="px-5 pb-5">
-        <button className="w-full py-2.5 rounded-xl bg-gray-50 dark:bg-[#162235] hover:bg-linear-to-r hover:from-cyan-500 hover:to-blue-500 text-gray-700 dark:text-gray-300 hover:text-white font-medium text-sm border border-gray-200 dark:border-gray-800 hover:border-transparent flex items-center justify-center gap-2 transition-all duration-300 shadow-sm">
+        <Link
+          href={`/browse-recipes/recipe/${recipe._id}`}
+          className="w-full py-2.5 rounded-xl bg-gray-50 dark:bg-[#162235] hover:bg-linear-to-r hover:from-cyan-500 hover:to-blue-500 text-gray-700 dark:text-gray-300 hover:text-white font-medium text-sm border border-gray-200 dark:border-gray-800 hover:border-transparent flex items-center justify-center gap-2 transition-all duration-300 shadow-sm"
+        >
           <Utensils className="w-4 h-4" />
           View Recipe
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -35,8 +35,11 @@ export const removeServer = async (path, method) => {
     },
   });
   const deleteRes = await res.json();
-  if (deleteRes.status) {
+  if (deleteRes.message === "recipe delete successfully") {
     revalidatePath("/dashboard/user/my-recipes");
+  }
+  if (deleteRes.message === "favourite recipe delete successfully") {
+    revalidatePath("/dashboard/user/favorites");
   }
   return deleteRes;
 };
@@ -45,4 +48,34 @@ export const serverFetch = async (path) => {
   const res = await fetch(`${baseUrl}${path}`);
   const data = await res.json();
   return data || [];
+};
+
+export const revaliDateFetche = async (path) => {
+  const res = await fetch(`${baseUrl}${path}`, {
+    next: {
+      revalidate: 60,
+    },
+  });
+  const data = await res.json();
+  return data || [];
+};
+
+export const getAllRecipe = async (category = "", page = 1, limit = 10) => {
+  try {
+    let url = `${baseUrl}/api/allrecipes?page=${page}&limit=${limit}`;
+    if (category) {
+      url += `&category=${category}`;
+    }
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("API Connection Error:", error);
+    return { status: false, message: "Failed to connect to server" };
+  }
 };

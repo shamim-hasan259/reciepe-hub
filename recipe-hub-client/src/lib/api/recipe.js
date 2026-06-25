@@ -15,3 +15,7 @@ export const fetchePopularRecipe = async () => {
 export const fetchFeatureRecipe = async () => {
   return await serverFetch("/api/feature/recipe");
 };
+
+export const fetctedRecipeDetails = async (id) => {
+  return await serverFetch(`/api/recipedetails/${id}`);
+};
