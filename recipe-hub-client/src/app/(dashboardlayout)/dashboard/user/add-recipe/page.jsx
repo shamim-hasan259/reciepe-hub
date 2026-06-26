@@ -10,7 +10,7 @@ const AddRecipePage = async () => {
   console.log(recipes);
   const canAddRecipe = user?.plan === "premium" || recipes.length < user?.limit;
   return (
-    <div>
+    <section className="min-h-screen">
       {canAddRecipe ? (
         <AddRecipeForm user={user} />
       ) : (
@@ -36,7 +36,7 @@ const AddRecipePage = async () => {
           </Link>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

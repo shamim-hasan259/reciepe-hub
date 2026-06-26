@@ -3,10 +3,11 @@ import Link from "next/link";
 import { ArrowLeft, Clock, BookOpen } from "lucide-react";
 import { fetctedRecipeDetails } from "@/lib/api/recipe";
 import RecipeActions from "@/components/RecipeActions";
+import { getUserSession } from "@/lib/session/session";
 
 const RecipeDetailsPage = async ({ params }) => {
   const { id } = await params;
-
+  const user = await getUserSession();
   const { data: recipe } = await fetctedRecipeDetails(id);
 
   if (!recipe) {
@@ -100,6 +101,7 @@ const RecipeDetailsPage = async ({ params }) => {
           )}
           <RecipeActions
             recipe={recipe}
+            user={user}
             recipePrice={recipe.price || 15.99}
             recipeName={recipe.recipeName || recipe.title}
           />

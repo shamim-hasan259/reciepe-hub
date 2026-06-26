@@ -9,7 +9,7 @@ import { getAllRecipe } from "@/lib/core/server";
 const DashBoardUserHomepage = async () => {
   const user = await getUserSession();
   const { data: recipes } = await findRecipe(user?.id);
-  const { data: favourites } = await getFavouriteRecipe();
+  const { data: favourites } = await getFavouriteRecipe(user?.id);
   const { data: allrecipe } = await getAllRecipe();
   console.log(allrecipe);
 
@@ -17,9 +17,6 @@ const DashBoardUserHomepage = async () => {
     (total, recipe) => total + recipe.likesCount,
     0,
   );
-
-  console.log(totalLike);
-
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 p-6 md:p-12 font-sans transition-colors duration-200">
       <header className="mb-8 flex justify-between items-center">

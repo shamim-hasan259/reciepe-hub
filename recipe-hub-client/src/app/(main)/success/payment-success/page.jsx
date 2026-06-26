@@ -2,11 +2,13 @@ import React from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { stripe } from "@/lib/stripe";
-import { addSubscription } from "@/lib/actions/subscription";
+import { createPayment } from "@/lib/actions/payments";
 
 const SuccessPage = async ({ searchParams }) => {
   const params = await searchParams;
   const session_id = params?.session_id;
+
+  console.log(params);
 
   if (!session_id) {
     throw new Error("Please provide a valid session_id");
@@ -20,18 +22,14 @@ const SuccessPage = async ({ searchParams }) => {
   } = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ["line_items", "payment_intent"],
   });
-  console.log(id);
+  console.log(payment_intent);
+
   if (status === "open") {
     redirect("/");
   }
   if (status === "complete") {
-    await addSubscription({
-      ...metadata,
-      transaction_id: payment_intent?.id,
-      sessionId: session_id,
-    });
+    await createPayment({ ...metadata });
   }
-
   return (
     <div className="min-h-screen bg-[#f3f4f6] dark:bg-[#0c1017] flex items-center justify-center p-4 transition-colors duration-300">
       <div className="max-w-md w-full bg-white dark:bg-[#111c2a] rounded-2xl border border-gray-200 dark:border-gray-800 p-8 text-center shadow-xl transition-colors duration-300">

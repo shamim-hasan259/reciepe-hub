@@ -50,7 +50,7 @@ export const serverFetch = async (path) => {
   return data || [];
 };
 
-export const revaliDateFetche = async (path) => {
+export const revaliDateFetched = async (path) => {
   const res = await fetch(`${baseUrl}${path}`, {
     next: {
       revalidate: 60,

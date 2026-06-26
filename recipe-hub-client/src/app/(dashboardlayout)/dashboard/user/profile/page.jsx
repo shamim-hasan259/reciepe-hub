@@ -52,9 +52,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* মেইন কন্টেন্ট গ্রিড */}
         <div className="flex flex-col md:flex-row gap-6">
-          {/* Left Side: Edit Profile */}
           <div className="flex-1 bg-white dark:bg-[#111c2a] p-6 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm transition-colors duration-300">
             <h2 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 font-serif">
               Edit Profile
