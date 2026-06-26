@@ -24,6 +24,9 @@ export const auth = betterAuth({
       limit: {
         defaultValue: 2,
       },
+      isBlocked: {
+        defaultValue: false,
+      },
     },
   },
   session: {

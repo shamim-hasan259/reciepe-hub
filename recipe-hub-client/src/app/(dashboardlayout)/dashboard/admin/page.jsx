@@ -106,7 +106,7 @@ export default async function AdminHomePage() {
             Platform Settings
           </button>
 
-          <button className="flex items-center gap-2 px-4 py-2.5 text-xs font-bold border border-transparent bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-xl transition shadow-sm shadow-cyan-500/10">
+          <button className="flex items-center gap-2 px-4 py-2.5 text-xs font-bold border border-transparent bg-linear-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-xl transition shadow-sm shadow-cyan-500/10">
             <PlusCircle className="w-4 h-4" />
             New Admin/Role
           </button>
