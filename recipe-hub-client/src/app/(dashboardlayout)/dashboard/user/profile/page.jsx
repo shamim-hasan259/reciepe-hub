@@ -9,6 +9,7 @@ export default function ProfilePage() {
   const [imageUrl, setImageUrl] = useState("");
   const { data } = useSession();
   const user = data?.user;
+  console.log(user);
   const isPremiumUser = user?.plan === "premium";
   const handleEditProfile = async (e) => {
     e.preventDefault();

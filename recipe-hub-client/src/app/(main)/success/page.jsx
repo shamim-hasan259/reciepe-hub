@@ -20,7 +20,7 @@ const SuccessPage = async ({ searchParams }) => {
   } = await stripe.checkout.sessions.retrieve(session_id, {
     expand: ["line_items", "payment_intent"],
   });
-  console.log(id);
+
   if (status === "open") {
     redirect("/");
   }
@@ -31,7 +31,6 @@ const SuccessPage = async ({ searchParams }) => {
       sessionId: session_id,
     });
   }
-
   return (
     <div className="min-h-screen bg-[#f3f4f6] dark:bg-[#0c1017] flex items-center justify-center p-4 transition-colors duration-300">
       <div className="max-w-md w-full bg-white dark:bg-[#111c2a] rounded-2xl border border-gray-200 dark:border-gray-800 p-8 text-center shadow-xl transition-colors duration-300">

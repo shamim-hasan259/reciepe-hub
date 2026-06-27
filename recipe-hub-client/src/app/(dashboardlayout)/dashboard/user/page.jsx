@@ -45,7 +45,7 @@ const DashBoardUserHomepage = async () => {
             <FileText className="w-5 h-5 text-slate-400 dark:text-slate-500" />
           </div>
           <p className="text-4xl font-extrabold mb-4 text-slate-900 dark:text-white">
-            {recipes.length}
+            {recipes?.length}
           </p>
           <a
             href="#"
@@ -63,7 +63,7 @@ const DashBoardUserHomepage = async () => {
             <Bookmark className="w-5 h-5 text-slate-400 dark:text-slate-500" />
           </div>
           <p className="text-4xl font-extrabold mb-4 text-slate-900 dark:text-white">
-            {favourites.length}
+            {favourites?.length}
           </p>
           <a
             href="#"

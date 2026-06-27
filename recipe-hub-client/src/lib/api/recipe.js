@@ -13,7 +13,9 @@ export const singleRecipeFetch = async (id) => {
 };
 
 export const fetchePopularRecipe = async () => {
-  return await revaliDateFetched("/api/popular/recipe");
+  return await revaliDateFetched("/api/popular/recipe", {
+    next: { revalidath: 60 },
+  });
 };
 
 export const fetchFeatureRecipe = async () => {

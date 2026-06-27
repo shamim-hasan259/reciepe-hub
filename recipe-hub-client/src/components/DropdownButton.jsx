@@ -23,11 +23,14 @@ const DropdownButton = ({ user }) => {
       <Dropdown.Popover>
         <Dropdown.Menu>
           <Dropdown.Item>
-            <Link className="w-full" href={`/dashboard/${user.role}`}>
+            <Link
+              className="flex w-full items-center justify-between gap-2"
+              href={`/dashboard/${user.role}`}
+            >
               Dashboard
             </Link>
           </Dropdown.Item>
-          <Dropdown.Item className="w-full" variant="danger">
+          <Dropdown.Item variant="danger">
             <div className="flex w-full items-center justify-between gap-2">
               <button
                 onClick={handleLogout}

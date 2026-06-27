@@ -105,9 +105,12 @@ const MyRecipePage = async () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right">
                       <div className="inline-flex items-center gap-2">
-                        <button className="inline-flex items-center justify-center p-2 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium text-xs transition gap-1">
+                        <Link
+                          href={`/browse-recipes/recipe/${recipe._id}`}
+                          className="inline-flex items-center justify-center p-2 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium text-xs transition gap-1"
+                        >
                           <Eye className="w-3.5 h-3.5" /> View
-                        </button>
+                        </Link>
                         <Link
                           href={`/dashboard/user/my-recipes/edit/${recipe._id}`}
                           className="inline-flex items-center justify-center p-2 rounded-xl border border-orange-200 dark:border-orange-900/50 text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20 font-medium text-xs transition gap-1"

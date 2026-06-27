@@ -6,8 +6,9 @@ import { Crown } from "lucide-react";
 import Link from "next/link";
 const AddRecipePage = async () => {
   const user = await getUserSession();
+  console.log(user);
   const { data: recipes } = await findRecipe(user?.id);
-  console.log(recipes);
+
   const canAddRecipe = user?.plan === "premium" || recipes.length < user?.limit;
   return (
     <section className="min-h-screen">

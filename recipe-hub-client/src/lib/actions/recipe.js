@@ -1,9 +1,12 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { serverMution, removeServer } from "../core/server";
 
 export const addRecipe = async (data) => {
-  return await serverMution("/api/recipes", data, "POST");
+  const res = await serverMution("/api/recipes", data, "POST");
+  revalidatePath("/dashboard/user/add-recipe");
+  return await res;
 };
 
 export const updateRecipe = async (id, newData) => {

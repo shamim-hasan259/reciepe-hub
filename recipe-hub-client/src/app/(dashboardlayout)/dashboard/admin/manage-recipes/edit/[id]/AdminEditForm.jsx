@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import { Upload, Plus, Trash2, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
-import { updateRecipe } from "@/lib/actions/recipe";
+import { editRecipeAdmin } from "@/lib/actions/admin";
 import { redirect } from "next/navigation";
 
-export default function EditRecipeForm({ recipe }) {
-  console.log(recipe);
+export default function AdminEditForm({ recipe }) {
+  // console.log(recipe);
   const recipeData = recipe?.data || recipe;
 
   const [loading, setLoading] = useState(false);
@@ -97,12 +97,12 @@ export default function EditRecipeForm({ recipe }) {
       status: recipeData?.status || "published",
     };
 
-    const res = await updateRecipe(recipe._id, updatedRecipeData);
+    const res = await editRecipeAdmin(recipe._id, updatedRecipeData);
     if (res.status) {
       toast.success(`${res.message}`);
-      redirect("/dashboard/user/my-recipes");
+      redirect("/dashboard/admin/manage-recipes");
     }
-
+    console.log(updatedRecipeData);
     setLoading(false);
   };
 
