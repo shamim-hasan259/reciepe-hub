@@ -45,7 +45,6 @@ const ReportPage = async () => {
           <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700/60 shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
-                {/* টেবিল কলাম হেডার্স */}
                 <thead>
                   <tr className="border-b border-gray-100 dark:border-slate-700/50 bg-gray-50/50 dark:bg-slate-800/50">
                     <th className="p-4 text-[11px] font-bold uppercase tracking-wider text-gray-400 dark:text-slate-400 pl-6">

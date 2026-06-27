@@ -1,6 +1,6 @@
+import { allrecipeFetchedAdmin } from "@/lib/api/admin";
 import { getAllReports } from "@/lib/api/report";
 import { getAllUsers, getPremiumUsers } from "@/lib/api/user";
-import { getAllRecipe } from "@/lib/core/server";
 import {
   Users,
   FileText,
@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 export default async function AdminHomePage() {
-  const { data: recipes } = await getAllRecipe();
+  const { data: recipes } = await allrecipeFetchedAdmin();
   const { data: allUsers } = await getAllUsers();
   const { data: premiumUsers } = await getPremiumUsers();
   const { data: reports } = await getAllReports();

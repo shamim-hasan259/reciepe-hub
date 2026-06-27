@@ -1,10 +1,9 @@
 import RecipeTable from "@/components/RecipeTable";
-import { getAllRecipe } from "@/lib/core/server";
+import { allrecipeFetchedAdmin } from "@/lib/api/admin";
 import React from "react";
 
 const AdminManageRecipesPage = async () => {
-  const { data: recipes } = await getAllRecipe();
-
+  const { data: recipes } = await allrecipeFetchedAdmin();
   return (
     <div className="p-6 space-y-6 min-h-screen bg-gray-50/50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-200">
       <div className="space-y-1">

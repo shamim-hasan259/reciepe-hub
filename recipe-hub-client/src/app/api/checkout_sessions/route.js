@@ -24,6 +24,7 @@ export async function POST() {
         userId: user?.id,
         userEmail: user?.email,
         plan: user?.plan,
+        amount: 9.99,
       },
       mode: "subscription",
       success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
