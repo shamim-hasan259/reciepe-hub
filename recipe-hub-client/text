@@ -1,4 +1,0 @@
-text = bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent
-bg = bg-gradient-to-r from-cyan-500 to-blue-500
-            hover:from-cyan-600 hover:to-blue-600
-            text-white hover:shadow-cyan-500/30

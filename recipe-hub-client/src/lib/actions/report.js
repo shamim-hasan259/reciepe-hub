@@ -10,3 +10,9 @@ export const dismisReport = async (id) => {
   revalidatePath("/dashboard/admin/reports");
   return await res;
 };
+
+export const deleteRecipe = async (id) => {
+  const res = await removeServer(`/api/delete/recipe/report/${id}`, "DELETE");
+  revalidatePath("/dashboard/admin/reports");
+  return await res;
+};

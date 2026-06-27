@@ -1,11 +1,16 @@
 "use client";
 
-import { dismisReport } from "@/lib/actions/report";
+import { dismisReport, deleteRecipe } from "@/lib/actions/report";
 import React from "react";
 import toast from "react-hot-toast";
 
 export default function ReportActions({ reportId, recipeId }) {
-  const handleRemoveRecipe = async () => {};
+  const handleRemoveRecipe = async () => {
+    const res = await deleteRecipe(recipeId);
+    if (res.status) {
+      toast.success(`${res.message}`);
+    }
+  };
 
   const handleDismissReport = async () => {
     const res = await dismisReport(reportId);
